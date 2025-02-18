@@ -14,14 +14,14 @@ portfolio_value = 5000  # Amount in dollars for initial portfolio value
 
 # Get and process data
 # Ticker data
-prices = yf.download(tickers=tickers, start=start, end=end)['Adj Close']
+prices = yf.download(tickers=tickers, start=start, end=end)['Close']
 daily_ret = np.log(prices / prices.shift(1))[1:]
 daily_ret_col = list(daily_ret.columns)
 monthly_ret = daily_ret.groupby(pd.Grouper(freq='M')).apply(np.sum)
 
 # Benchmark data
-prices_benchmark = yf.download(tickers=benchmark, start=start, end=end)['Adj Close']
-prices_benchmark_daily_ret = np.log(prices_benchmark / prices_benchmark.shift(1))[1:].to_frame()
+prices_benchmark = yf.download(tickers=benchmark, start=start, end=end)['Close']
+prices_benchmark_daily_ret = np.log(prices_benchmark / prices_benchmark.shift(1))[1:]
 
 # Define trading dates
 month_end = pd.date_range(start, end, freq='M').strftime('%Y-%m-%d').tolist()
